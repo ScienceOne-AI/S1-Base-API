@@ -1,0 +1,6 @@
+model_name_or_path: /app/Qwen3-32B/
+adapter_name_or_path: /app/adapter/
+template: qwen3
+infer_backend: huggingface
+trust_remote_code: true
+enable_thinking: false

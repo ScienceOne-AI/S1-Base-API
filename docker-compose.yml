@@ -1,0 +1,140 @@
+version: '3.11'
+
+services:
+  alphafold2-multimer:
+    image: nvcr.io/nim/deepmind/alphafold2-multimer:1.0.0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: [ '0' ]
+              capabilities: [ gpu ]
+    ports:
+      - "8001:8000"
+    environment:
+      - NGC_CLI_API_KEY=your-api-key
+    volumes:
+      - ~/.cache:/opt/nim/.cache
+    restart: unless-stopped
+
+  evo2:
+    image: nvcr.io/nim/arc/evo2-40b:latest
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: [ '1' ]
+              capabilities: [ gpu ]
+    ports:
+      - "8002:8000"
+    environment:
+      - NGC_API_KEY=your-api-key
+    volumes:
+      - ~/.cache:/opt/nim/.cache
+    restart: unless-stopped
+
+  mattergen:
+    build:
+      context: ./services/mattergen_repo
+      dockerfile: Dockerfile
+    image: mattergen-api:latest
+    container_name: mattergen-api
+    ports:
+      - "8003:8000"
+    volumes:
+      - ./services/mattergen/checkpoints:/app/checkpoints
+      - ./services/mattergen/data-release:/app/data-release
+      - ./services/mattergen/cache:/app/cache
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TRANSFORMERS_CACHE=/app/checkpoints
+      - HF_HOME=/app/checkpoints
+      - HF_ENDPOINT=https://hf-mirror.com
+      - MINIO_URL=
+      - MINIO_ACCESS_KEY=
+      - MINIO_SECRET_KEY=
+      - MINIO_BUCKET_NAME=
+      - MINIO_SECURE=
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: [ '2' ]
+              capabilities: [ gpu ]
+    restart: unless-stopped
+
+  esm3:
+    build:
+      context: ./services/esm3
+      dockerfile: Dockerfile
+    ports:
+      - "8004:8000"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: [ '3' ]
+              capabilities: [ gpu ]
+    restart: unless-stopped
+
+  spectrum:
+    build:
+      context: ./services/spectrum
+      dockerfile: Dockerfile
+    container_name: spectrum-service
+    ports:
+      - "8005:5002"
+    volumes:
+      - ./services/spectrum/adapter:/app/adapter:ro
+      - ./services/spectrum/chat.py:/app/chat.py
+      - ./services/spectrum/api_lora.yaml:/app/api_lora.yaml
+    environment:
+      - CUDA_VISIBLE_DEVICES=4
+      - MODEL_PATH=/app/adapter/
+      - FLASK_ENV=production
+      - PYTHONPATH=/app
+      - PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+      - CUDA_LAUNCH_BLOCKING=1
+      - API_PORT=5002
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: [ '4' ]
+              capabilities: [ gpu ]
+    restart: unless-stopped
+
+  field:
+    build:
+      context: ./services/field
+      dockerfile: Dockerfile
+    ports:
+      - "8006:8000"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: [ '5' ]
+              capabilities: [ gpu ]
+    restart: unless-stopped
+
+  sone-base-api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - ROUTE_MODEL_NAME=
+      - ROUTE_MODEL_BASE_URL=
+      - ROUTE_MODEL_BASE_API_KEY=
+      - BASE_MODEL_NAME=
+      - BASE_MODEL_BASE_URL=
+      - BASE_MODEL_BASE_API_KEY=
+    restart: unless-stopped
