@@ -27,7 +27,7 @@ def spectrum_predict(
             - smiles: The extracted SMILES string if present in the response, otherwise an empty string.
             - error: An error message if an exception occurs during processing.
     """
-    invoke_url = 'http://spectrum-service:5002/v1/chat/completions'
+    invoke_url = 'http://spectrum:5002/v1/chat/completions'
     system_prompt = "You are a professional chemist specialized in spectral analysis. Given spectral data descriptions, analyze the data to identify functional groups and deduce the corresponding chemical compound. Respond with the SMILES notation strictly formatted as ##SMILES: followed by the SMILES string."
 
     payload = {

@@ -35,7 +35,6 @@ def execute(sequence: str, left_length: int, right_length: int, num_steps: int =
     }
 
     url = 'http://esm3:8000/generate-sequence'
-    url = 'http://120.220.102.26:38007/generate-sequence'
 
     try:
         # Send POST request to ESM3 service with timeout protection

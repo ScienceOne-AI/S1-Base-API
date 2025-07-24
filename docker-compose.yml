@@ -1,4 +1,4 @@
-version: '3.11'
+version: '3.9'
 
 services:
   alphafold2-multimer:
@@ -124,7 +124,7 @@ services:
               capabilities: [ gpu ]
     restart: unless-stopped
 
-  sone-base-api:
+  s1-base-api:
     build:
       context: ./api
       dockerfile: Dockerfile
