@@ -140,5 +140,11 @@ curl --location --request POST 'http://127.0.0.1:8000/v1/chat/completions' \
 }
 ```
 
+## 📄 开源协议
 
+本项目基于 [Apache-2.0 License](LICENSE) 开源发布，欢迎学术与商业使用。
+
+## 🤝 致谢
+
+本项目基于[vllm](https://github.com/vllm-project/vllm)、[langgraph](https://github.com/langchain-ai/langgraph)等开源项目开发，基础模型为 [Qwen3](https://qwenlm.github.io/blog/qwen3/)。感谢所有开源社区的贡献！
 
