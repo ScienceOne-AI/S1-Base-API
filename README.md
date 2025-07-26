@@ -1,4 +1,13 @@
-# S1-Base-API
+<div align="center"><h1 align="center">S1-Base-API</h1></div>
+
+<div align="center">
+
+[![License](https://img.shields.io/badge/LICENSE-Apache_2.0-green.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+[![Python 3.10+](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/downloads/release/python-310/)
+
+</div>
+
+
 
 ## 项目介绍
 
