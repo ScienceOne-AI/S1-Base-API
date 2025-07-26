@@ -46,6 +46,7 @@ S1-Base 模型以 Apache 2.0 协议开源，您可以在 [Huggingface](https://h
    1. [相关文档](https://build.nvidia.com/arc/evo2-40b/deploy)
 3. **mattergen**：从本地 `./services/mattergen` 构建的分子材料领域服务。
    1. [相关文档](https://github.com/microsoft/mattergen)
+   2. [minio安装](https://github.com/minio/minio)
 4. **esm3**：从本地 `./services/esm3` 构建的蛋白质序列服务。
    1. [相关文档](https://huggingface.co/EvolutionaryScale/esm3-sm-open-v1)
 5. **spectrum**：从本地 `./services/spectrum` 构建的谱数据相关服务。
@@ -70,7 +71,12 @@ brew install nvidia-docker
 ```
 
 2. 修改docker-compose.yml相关环境变量
+   1. alphafold2-multimer服务的NGC\_CLI\_API\_KEY
+   2. evo2服务的NGC\_API\_KEY
+   3. mattergen服务的minio配置
 3. 修改docker-compose.yml中的服务配置
+   1. 服务启动的端口
+   2. 服务部署的GPU序号
 
 ## 服务管理
 
@@ -155,5 +161,5 @@ curl --location --request POST 'http://127.0.0.1:8000/v1/chat/completions' \
 
 ## 🤝 致谢
 
-本项目基于[vllm](https://github.com/vllm-project/vllm)、[langgraph](https://github.com/langchain-ai/langgraph)等开源项目开发，基础模型为 [Qwen3](https://qwenlm.github.io/blog/qwen3/)。感谢所有开源社区的贡献！
+本项目基于[vllm](https://github.com/vllm-project/vllm)、[langgraph](https://github.com/langchain-ai/langgraph)、[minio](https://github.com/minio/minio)等开源项目开发，基础模型为 [Qwen3](https://qwenlm.github.io/blog/qwen3/)。感谢所有开源社区的贡献！
 
