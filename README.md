@@ -63,11 +63,9 @@ S1-Base 模型以 Apache 2.0 协议开源，您可以在 [Huggingface](https://h
 1. 安装依赖
 
 ```bash
-# 安装Docker和Docker Compose
-brew install docker docker-compose
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
-# 安装NVIDIA Container Toolkit
-brew install nvidia-docker
+sudo apt-get install nvidia-docker
 ```
 
 2. 修改docker-compose.yml相关环境变量
