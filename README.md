@@ -7,16 +7,15 @@
 
 </div>
 
-
-
 ## 项目介绍
 
-本项目为 S1-Base 系列中的通用科学大语言模型API，该API使用了S1-Base科学大模型，该模型系统地学习并理解 “数理化天地生” 六大基础学科核心理论、定律与专业知识，依托 1.7 亿篇科研论文，在数百万条高质量科学推理数据上经过科学指令微调和多学科复合奖励强化学习训练得到，并通过高中、本科及硕博课程式训练策略逐步强化其学科能力。该系列模型能够根据用户问题自动路由各个领域专用模型，包括谱、场、分子材料、生物领域Evo2、生物领域ESM3、生物领域 AlphaFold2。
+本项目为磐石科学基础大模型（S1-Base）API，它采用专业科学知识和数据进行训练，是服务于科学任务的通专融合的科学领域多模态大模型，应用于科学推理场景与复杂学科任务。该模型现阶段采用异构混合专家架构，能够根据用户问题自动“路由”至深度定制的语言大模型或领域专用模型（波、谱、场、蛋白质、生物序列等）。
+
+## 通用大模型
+
+该模型系统地学习并理解 “数理化天地生” 六大基础学科核心理论、定律与专业知识，依托 1.7 亿篇科研论文，在数百万条高质量科学推理数据上经过科学指令微调和多学科复合奖励强化学习训练得到，并通过高中、本科及硕博课程式训练策略逐步强化其学科能力。
 
 该模型共有三个参数量级，分别是 S1-Base-8B，S1-Base-32B 和 S1-Base-671B，其中 S1-Base-8B 和 S1-Base-32B 分别基于 [Qwen3-8B](https://github.com/QwenLM/Qwen3) 和 [Qwen3-32B](https://github.com/QwenLM/Qwen3) 训练得到，S1-Base-671B 基于 [DeepSeek-R1-671B](https://github.com/deepseek-ai/DeepSeek-R1) 训练得到，均支持 32k 上下文。
-
-## 基座模型权重
-
 S1-Base 模型以 Apache 2.0 协议开源，您可以在 [Huggingface](https://huggingface.co/collections/ScienceOne-AI/s1-base-687a2373fde4791bc6c761f0) 或 [ModelScope](https://modelscope.cn/collections/S1-Base-66b70cf6e51c48) 下载模型权重。
 
 | 模型名称     | Huggingface地址                                                   | ModelScope地址                                                          |
@@ -24,6 +23,20 @@ S1-Base 模型以 Apache 2.0 协议开源，您可以在 [Huggingface](https://h
 | S1-Base-8B   | [S1-Base-8B](https://huggingface.co/ScienceOne-AI/S1-Base-8B)     | [S1-Base-8B](https://modelscope.cn/models/ScienceOne-AI/S1-Base-8B)     |
 | S1-Base-32B  | [S1-Base-32B](https://huggingface.co/ScienceOne-AI/S1-Base-32B)   | [S1-Base-32B](https://modelscope.cn/models/ScienceOne-AI/S1-Base-32B)   |
 | S1-Base-671B | [S1-Base-671B](https://huggingface.co/ScienceOne-AI/S1-Base-671B) | [S1-Base-671B](https://modelscope.cn/models/ScienceOne-AI/S1-Base-671B) |
+
+## 领域专业模型
+
+1. alphafold2-multimer: AlphaFold2 是由谷歌旗下人工智能研究实验室 DeepMind 的研究团队开发的一款用于蛋白质结构预测的深度学习模型。AlphaFold2 在其前身 AlphaFold 的成功基础上发展而来，是蛋白质结构预测领域的一项重大突破。
+2. evo2: Evo2 是一种生物学基础模型，能够整合长基因组序列上的信息，同时对单核苷酸变化保持敏感性。该模型拥有 400 亿个参数，能理解所有生命领域的遗传密码，是迄今为止规模最大的生物学人工智能模型。Evo 2 的训练数据集包含近 9 万亿个核苷酸。
+3. esm3: esm3-sm-open-v1 是在 27.8 亿种天然蛋白质的基础上训练而成的。通过合成数据增强，训练数据涵盖了 31.5 亿条蛋白质序列、2.36 亿个蛋白质结构以及 5.39 亿种带有功能注释的蛋白质，总计达 7710 亿个标记。esm3-sm-open-v1 是一种生成式模型，能够根据序列、结构和功能的部分提示来设计蛋白质。
+4. mattergen: MatterGen 是一个用于无机材料设计的生成模型，它可以在整个周期表范围内进行材料设计，并通过微调来满足广泛的属性约束。
+
+## 科学模态模型
+
+1. 场模态模型：计算高铁模型在多种流体环境下的表面压力场，为高铁构型设计提供了数据支持，能够显著提升高铁空气动力学的计算效率，大幅缩短高铁的设计周期。
+2. 谱模态模型：实现谱信号到分子微观结构的解析，涵盖质谱、红外光谱、紫外-可见光谱、拉曼光谱、核磁共振谱等谱模态，各模态相对当前水平平均提升31%，最高相对提升67%。
+
+
 
 ## 项目结构
 
@@ -159,5 +172,5 @@ curl --location --request POST 'http://127.0.0.1:8000/v1/chat/completions' \
 
 ## 🤝 致谢
 
-本项目基于[vllm](https://github.com/vllm-project/vllm)、[langgraph](https://github.com/langchain-ai/langgraph)、[minio](https://github.com/minio/minio)等开源项目开发，基础模型为 [Qwen3](https://qwenlm.github.io/blog/qwen3/)。感谢所有开源社区的贡献！
+本项目基于[vllm](https://github.com/vllm-project/vllm)、[langgraph](https://github.com/langchain-ai/langgraph)、[minio](https://github.com/minio/minio)等开源项目以及[Qwen3](https://qwenlm.github.io/blog/qwen3/)、[DeepSeek-R1](https://github.com/deepseek-ai/DeepSeek-R1)、[alphafold2-multimer](https://build.nvidia.com/deepmind/alphafold2-multimer/deploy)、[esm3](https://huggingface.co/EvolutionaryScale/esm3-sm-open-v1)、[evo2](https://build.nvidia.com/arc/evo2-40b)等开源模型和领域专用模型。感谢所有开源社区的贡献！
 
